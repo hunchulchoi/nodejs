@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "choi",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/hunchulchoi/nodejs/issues"
   },
-  "homepage": "https://github.com/hunchulchoi/nodejs#readme"
+  "homepage": "https://github.com/hunchulchoi/nodejs#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }

@@ -2,15 +2,20 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const config = require('./config/key')
+
+
+console.debug(config.mongoURI);
+
 //mongoose 설정
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://choi:!Kimmun5032@nettlica.duckdns.org:57017', {
+mongoose.connect(config.mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => console.log('Mongodb connected.......'))
     .catch(err => console.error(err))
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World! 안녕하셔요   됐다 안됐다..')
 })
 
 //  body parser 
@@ -31,7 +36,7 @@ app.use(bodyParser.json())
 //회원 가입
 app.post('/register', (req, res)=>{
 
-  const User = new Use(req.body)
+  const User = new User(req.body)
 
   User.save((err, userInfo)=>{
     if(err) return res.json({success: false})
