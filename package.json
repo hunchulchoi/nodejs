@@ -10,7 +10,16 @@
   "author": "choi",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "mongoose": "^5.10.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunchulchoi/nodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hunchulchoi/nodejs/issues"
+  },
+  "homepage": "https://github.com/hunchulchoi/nodejs#readme"
 }
