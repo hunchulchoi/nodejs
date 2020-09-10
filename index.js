@@ -36,10 +36,17 @@ app.use(bodyParser.json())
 //회원 가입
 app.post('/register', (req, res)=>{
 
-  const User = new User(req.body)
+  console.dir(req)
 
-  User.save((err, userInfo)=>{
-    if(err) return res.json({success: false})
+  const user = new User(req.body)
+
+  console.log(new Date(), user)
+
+  user.save((err, userInfo)=>{
+    if(err) {
+        console.error(err);
+        return res.json({success: false})
+    }
     return res.status(200).json({
       success: true
     })
