@@ -7,8 +7,6 @@ npm install mongoose --save
 
 몽구스 연결 설정
 
-mongodb://choi:!Kimmun5032@nettlica.duckdns.org:57017
-
 git init
 
 .gitignore
