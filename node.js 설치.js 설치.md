@@ -1,0 +1,25 @@
+node.js 설치
+폴더 생성
+npm init
+npm install express --save
+
+npm install mongoose --save
+
+몽구스 연결 설정
+
+git init
+
+.gitignore
+nodemodule
+
+git add .
+
+git commit -m "comment"
+
+git@github.com:hunchulchoi/nodejs.gitgit
+
+npm install --save body-parser
+
+npm install nodemon --save-dev
+
+nodemon index.js 스크립트 추가

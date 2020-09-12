@@ -22,7 +22,6 @@ const userSchema = mongoose.Schema({
   },
   lastname: {
     type: Number,
-    default: 0,
   },
   image: String,
   token: {
@@ -31,11 +30,23 @@ const userSchema = mongoose.Schema({
   tokenExp: {
     type: Number,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 })
+
+// password 체크
+userSchema.methods.comparePassword = function (password) {
+  console.debug(password, this.password)
+  console.dir(bcrypt.compare(password, this.password))
+
+  return bcrypt.compare(password, this.password)
+}
 
 //password 필드 암호화
 userSchema.pre('save', function (next) {
-  let user = this
+  const user = this
 
   //비밀번호가 변경 되었을때만
   console.debug(`user.isModified('password'):${user.isModified('password')}`)
@@ -52,12 +63,15 @@ userSchema.pre('save', function (next) {
         user.password = hash
 
         console.debug(`user:${user}`)
+
+        // save 메소드 호출
+        next()
       })
     })
+  } else {
+    // save 메소드 호출
+    next()
   }
-
-  // save 메소드 호출
-  next()
 })
 
 // 모델과 스키마를 연결
