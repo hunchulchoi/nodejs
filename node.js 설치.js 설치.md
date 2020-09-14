@@ -23,3 +23,7 @@ npm install --save body-parser
 npm install nodemon --save-dev
 
 nodemon index.js 스크립트 추가
+
+npm install jsonwebtoken --save
+
+npm install cookie-parser

@@ -4,7 +4,9 @@ const port = 3000
 
 const config = require('./config/key')
 
-console.debug(config.mongoURI)
+const cookieParser = require('cookie-parser')
+
+// console.debug(config.mongoURI)
 
 //mongoose 설정
 const mongoose = require('mongoose')
@@ -31,6 +33,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // application/json
 app.use(bodyParser.json())
+
+// cookie parser 설정
+app.use(cookieParser())
 
 // main
 app.get('/', (req, res) => {
@@ -66,7 +71,13 @@ app.post('/login', (req, res) => {
       user.comparePassword(req.body.password)
     })
     // 3. 토큰 생성
-    //.then(user => user.generateToken())
+    .then(user => {
+      console.debug(`user:${user}`)
+      console.dir(user)
+      user.generateToken()
+    })
+    // 4. 토큰 저장
+    .then(user => res.cookie('x_auth', user.token))
     .catch(err => console.error(err))
 })
 

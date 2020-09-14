@@ -5,6 +5,9 @@ const bcrypt = require('bcrypt')
 
 const saltRounds = 10
 
+// jwt
+const jwt = require('jsonwebtoken')
+
 // 스키마를 만든다.
 const userSchema = mongoose.Schema({
   name: {
@@ -37,11 +40,30 @@ const userSchema = mongoose.Schema({
 })
 
 // password 체크
-userSchema.methods.comparePassword = function (password) {
+userSchema.methods.comparePassword = async function (password) {
   console.debug(password, this.password)
-  console.dir(bcrypt.compare(password, this.password))
 
-  return bcrypt.compare(password, this.password)
+  const same = await bcrypt.compare(password, this.password)
+
+  const user = this
+
+  console.debug(`same:${same}`)
+  return new Promise((resolve, reject) => {
+    console.dir(this)
+
+    if (same) resolve(user)
+    else reject('로그인 정보가 정확하지 않습니다.')
+  })
+}
+
+// token 생성
+userSchema.methods.generateToken = function () {
+  let user = this
+
+  user.token = jwt.sign(user._id, 'secretToken')
+  user.save()
+
+  return user
 }
 
 //password 필드 암호화
