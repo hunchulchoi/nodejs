@@ -41,7 +41,7 @@ const userSchema = mongoose.Schema({
 
 // password 체크
 userSchema.methods.comparePassword = async function (password) {
-  console.debug(password, this.password)
+  console.debug('userSchema.methods.comparePassword:', password, this.password, this)
 
   const same = await bcrypt.compare(password, this.password)
 
@@ -49,7 +49,8 @@ userSchema.methods.comparePassword = async function (password) {
 
   console.debug(`same:${same}`)
   return new Promise((resolve, reject) => {
-    console.dir(this)
+    console.debug(`return new Promise():${same}, ${this}, ${user}`)
+    //console.dir(this)
 
     if (same) resolve(user)
     else reject('로그인 정보가 정확하지 않습니다.')
@@ -60,10 +61,8 @@ userSchema.methods.comparePassword = async function (password) {
 userSchema.methods.generateToken = function () {
   let user = this
 
-  user.token = jwt.sign(user._id, 'secretToken')
-  user.save()
-
-  return user
+  user.token = jwt.sign(user._id.toHexString(), 'secretToken')
+  return user.save()
 }
 
 //password 필드 암호화

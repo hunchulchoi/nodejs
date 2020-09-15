@@ -67,17 +67,20 @@ app.post('/login', (req, res) => {
   User.findOne({ email: req.body.email })
     // 2. 비밀번호 확인
     .then(user => {
-      console.debug(user)
-      user.comparePassword(req.body.password)
+      console.debug(`1. 이메일 찾기: ${user}, ${req.body.password}`)
+      return user.comparePassword(req.body.password)
     })
     // 3. 토큰 생성
     .then(user => {
-      console.debug(`user:${user}`)
+      console.debug(`2. 비밀번호 확인:${user}`)
       console.dir(user)
-      user.generateToken()
+      return user.generateToken()
     })
     // 4. 토큰 저장
-    .then(user => res.cookie('x_auth', user.token))
+    .then(user => {
+      console.debug(`3. 토큰 생성: ${user.token}`)
+      res.cookie('x_auth', user.token)
+    })
     .catch(err => console.error(err))
 })
 
